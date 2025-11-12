@@ -1,9 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../auth/authContext";
+import { useAuth, type User } from "../auth/authContext";
+import { parseJSON } from "../utils/helper";
 
 const LayoutHeader: React.ComponentType<{}> = () => {
     const nav = useNavigate();
     const { currentPage } = useAuth();
+    const userDetails: User = parseJSON((localStorage.getItem('user') as string)).data
 
     return (
         <header 
@@ -28,13 +30,13 @@ const LayoutHeader: React.ComponentType<{}> = () => {
 
             <div className="flex items-center gap-4">
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full flex items-center justify-center shadow-soft">
+                    {/* <div className="w-10 h-10 rounded-full flex items-center justify-center shadow-soft">
                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="12" cy="8" r="3" fill="#6B7280" />
                             <path d="M4 20c0-3.3137 2.6863-6 6-6h4c3.3137 0 6 2.6863 6 6" fill="#6B7280" />
                         </svg>
-                    </div>
-                    <div className="text-sm text-gray-600">Admin</div>
+                    </div> */}
+                    <div className="text-sm text-gray-600">{userDetails.name}</div>
                 </div>
             </div>
 

@@ -6,11 +6,9 @@ import {
 } from "@mui/material";
 import { Add, Edit } from '@mui/icons-material';
 import type { MenuRow, MenuPayload, MenuFormState, MenuFormDialogProps, ToastState } from "./types";
-import baseURL from "../../config/baseURL";
 import { getAppMenuData } from "./api";
 import { buildMaps, computeFullPath, buildDepth, computePathSort, collectDescendants } from "../../utils/menuManagement";
-
-const apiPath = 'configuration/appMenu'
+import { fetchLink } from "../../components/customFetch";
 
 const defaultForm: MenuFormState = {
     menuId: null,
@@ -217,6 +215,7 @@ const MenuManagement: React.ComponentType<{
     }, []);
 
     const { byId } = useMemo(() => buildMaps(rows), [rows]);
+    
     const enriched = useMemo(() => {
         const byIdLocal = new Map<number, MenuRow>(rows.map((r) => [r.menuId, r]));
         const out = rows.map((r) => ({
@@ -262,21 +261,12 @@ const MenuManagement: React.ComponentType<{
     };
 
     const handleSubmit = async (menuId: number | null, payload: MenuPayload) => {
-        const url = `${baseURL + apiPath}/${menuId ? menuId : ''}`;
-
         try {
-            if (menuId)
-                await fetch(url, {
-                    method: "PUT",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(payload),
-                });
-            else
-                await fetch(url, {
-                    method: menuId ? "PUT" : "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(payload),
-                });
+            await fetchLink({
+                address: `configuration/appMenu/${menuId ? menuId : ''}`,
+                method: menuId ? "PUT" : "POST",
+                bodyData: payload,
+            })
             setToast({ open: true, msg: "Menu saved", severity: "success" });
             await fetchMenuData();
         } catch (e: any) {

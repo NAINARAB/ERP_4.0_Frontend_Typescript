@@ -21,10 +21,14 @@
     "@mui/x-charts": "^8.14.0",
     "@mui/x-date-pickers": "^8.14.0",
     "@tailwindcss/vite": "^4.1.16",
+    "jspdf": "^3.0.3",
+    "jspdf-autotable": "^5.0.2",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.9.4",
     "react-select": "^5.10.2",
+    "react-toastify": "^11.0.5",
+    "xlsx": "^0.18.5",
     "zod": "^4.1.12"
   },
   "devDependencies": {

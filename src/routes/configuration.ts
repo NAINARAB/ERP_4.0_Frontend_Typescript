@@ -3,6 +3,6 @@ import MenuManagement from "../modules/configuration/menuManagement";
 import { MenuGroupPage } from "../layout/subMenu";
 
 export const configurationRoutePath: componentRoute[] = [
-    { path: '/', component: MenuGroupPage },
-    { path: '/menumanagement', component: MenuManagement },
+    { path: '', component: MenuGroupPage },
+    { path: 'menumanagement', component: MenuManagement },
 ];

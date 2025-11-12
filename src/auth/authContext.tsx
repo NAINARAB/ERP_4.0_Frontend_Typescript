@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useMemo, useState } from "react";
 import type { MenuTreeNode } from "../utils/menuManagement";
 
-type User = {
+export type User = {
     sub: number;
     username: string;
     name?: string | null;
@@ -9,7 +9,7 @@ type User = {
     roleId?: number | null;
 };
 
-type AuthContextType = {
+export type AuthContextType = {
     user: User | null;
     token: string | null;
     login: (token: string, user: User) => void;

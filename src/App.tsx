@@ -1,4 +1,5 @@
-import './App.css'
+import './App.css';
+import './css/input.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useAuth } from "./auth/authContext";
 import { RequireAuth } from "./auth/requireAuth";
@@ -13,6 +14,8 @@ import type { MenuRow } from './modules/configuration/types';
 import { getAppMenuData } from './modules/configuration/api';
 import PageNotFound from './components/404page';
 import { buildMenuTree } from './utils/menuManagement';
+import { ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
     const { token, setNavDetails } = useAuth();
@@ -22,6 +25,7 @@ function App() {
     async function fetchMenuData(): Promise<MenuRow[] | any> {
         try {
             const res = await getAppMenuData(loadingOn, loadingOff);
+            console.log(res)
             setMenuData(res);
         } catch (e) {
             console.log(e);
@@ -44,7 +48,7 @@ function App() {
 
     return (
         <>
-
+            <ToastContainer />
             <LoadingScreen
                 loading={loading}
                 tone="light"

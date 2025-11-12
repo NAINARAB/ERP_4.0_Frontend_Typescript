@@ -8,13 +8,17 @@ export const getAppMenuData = async (
     loadingOff?: () => void
 ): Promise<MenuRow[]> => {
     const url = menuAPI;
-    const res = await fetchLink({
+    const res = await fetchLink<MenuRow>({
         address: url,
         loadingOn: typeof loadingOn === 'function' ? loadingOn : undefined,
         loadingOff: typeof loadingOff === 'function' ? loadingOff : undefined
     }).catch((e) => {
         throw new Error("NETWORK_ERROR:" + e.message);
     });
-    // if (!res.ok) console.log('menu api error');
-    return res;
+    
+    if (res.success) {
+        return res.data;
+    } else {
+        return [];
+    }
 }

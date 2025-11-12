@@ -6,8 +6,9 @@ import NavigateButton from "../components/navigationButton";
 import type { MenuTreeNode } from "../utils/menuManagement";
 import type { PageProps } from "../routes/indexRouter";
 
-export const getMenuColor = (ind: number) => {
-    return colors[ind] ? colors[randomNumber(colors.length)] : colors[ind];
+export const getMenuColor = (ind: number, random = false): { color: string, accent: string } => {
+    if (random) return colors[randomNumber(colors.length - 1)];
+    else return colors.length > ind ? colors[ind] : colors[randomNumber(colors.length - 1)];
 }
 
 export const MenuIconButton: React.ComponentType<{
@@ -44,7 +45,7 @@ export const MenuIconButton: React.ComponentType<{
                     </div>
 
                     {/* label */}
-                    <div className=" text-md text-gray-700 tracking-wide w-28 text-center">{menuObject.title}</div>
+                    <div className=" text-sm text-gray-700 tracking-wide w-28 text-center">{menuObject.title}</div>
                 </button>
             </NavigateButton>
 
@@ -75,8 +76,8 @@ const MainMenuList: React.ComponentType<PageProps> = ({
                         <MenuIconButton
                             key={index}
                             menuObject={m}
-                            color={colorValue.color}
-                            accent={colorValue.accent}
+                            color={colorValue?.color}
+                            accent={colorValue?.accent}
                         />
                     )
                 })}

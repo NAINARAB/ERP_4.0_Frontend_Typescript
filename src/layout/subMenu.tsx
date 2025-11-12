@@ -15,7 +15,7 @@ export const MenuGroupPage: React.ComponentType<PageProps> = ({
             ) : (
                 <main className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-8">
                     {currentPage?.children?.filter(m => m.menuType == 0).map((m, ind) => {
-                        const color = getMenuColor(ind);
+                        const color = getMenuColor(ind, true);
                         return (
                             <MenuIconButton
                                 key={m.menuId}
@@ -44,7 +44,7 @@ export const MenuGroupPage: React.ComponentType<PageProps> = ({
                             <main className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-8">
 
                                 {m?.children?.filter(m => m.menuType == 0).map((m, ind) => {
-                                    const color = getMenuColor(ind);
+                                    const color = getMenuColor(ind, true);
                                     return (
                                         <MenuIconButton
                                             key={m.menuId}
