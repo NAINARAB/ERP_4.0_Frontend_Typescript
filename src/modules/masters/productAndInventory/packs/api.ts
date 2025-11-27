@@ -1,13 +1,17 @@
-import { fetchLink } from "../../../components/customFetch";
-import type { Pack } from "../types";
+import { fetchLink } from "../../../../components/customFetch";
 import { toast } from 'react-toastify';
 
 const packAPI = "masters/packs/";
 
+export type Pack = {
+    Pack_Id: number;
+    Pack: string;
+}
+
 export const getPacks = async ({
     loadingOn,
     loadingOff
-}:{
+}: {
     loadingOn?: () => void,
     loadingOff?: () => void
 }): Promise<Pack[]> => {
@@ -36,7 +40,7 @@ export const createPack = async ({
     loadingOff,
     onSuccess,
     onError
-}:{
+}: {
     bodyData: Pack,
     loadingOn: () => void,
     loadingOff: () => void,

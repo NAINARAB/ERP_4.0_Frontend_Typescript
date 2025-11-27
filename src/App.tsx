@@ -26,7 +26,6 @@ function App() {
     async function fetchMenuData(): Promise<MenuRow[] | any> {
         try {
             const res = await getAppMenuData(loadingOn, loadingOff);
-            console.log(res)
             setMenuData(res);
         } catch (e) {
             console.log(e);

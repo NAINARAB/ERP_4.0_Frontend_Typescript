@@ -2,11 +2,11 @@ import React, { createContext, useContext, useMemo, useState } from "react";
 import type { MenuTreeNode } from "../utils/menuManagement";
 
 export type User = {
-    sub: number;
-    username: string;
+    id: number;
+    uniqueName: string;
     name?: string | null;
-    companyId?: number | null;
-    roleId?: number | null;
+    branchId?: number | null;
+    userType?: number | null;
 };
 
 export type AuthContextType = {
@@ -44,8 +44,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const logout = () => {
         setToken(null);
         setUser(null);
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
+        localStorage.clear();
     };
 
     const value = useMemo(() => ({ 

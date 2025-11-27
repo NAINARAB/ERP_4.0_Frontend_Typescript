@@ -1,3 +1,7 @@
+export const sessionUser = () => {
+    return JSON.parse(sessionStorage.getItem('user') || '{}');
+}
+
 export const ddmmyyyy = (dateObj: Date | string): string => {
     const receivedDate = dateObj ? new Date(dateObj) : new Date();
     return receivedDate.toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric' })

@@ -1,5 +1,5 @@
-import { fetchLink } from "../../../components/customFetch";
-import type { Product } from "../types";
+import { fetchLink } from "../../../../components/customFetch";
+import type { ProductAttributes } from "./variables";
 
 const productApi = 'masters/products';
 
@@ -9,8 +9,8 @@ export const listProduct = async ({
 }: {
     loadingOn?: () => void,
     loadingOff?: () => void
-}): Promise<Product[]> => {
-    const req = await fetchLink<Product>({
+}): Promise<ProductAttributes[]> => {
+    const req = await fetchLink<ProductAttributes>({
         address: productApi,
         method: "GET",
         loadingOn, loadingOff
@@ -31,8 +31,8 @@ export const getProduct = async ({
     id: number,
     loadingOn?: () => void,
     loadingOff?: () => void
-}): Promise<Product[]> => {
-    const req = await fetchLink<Product>({
+}): Promise<ProductAttributes[]> => {
+    const req = await fetchLink<ProductAttributes>({
         address: `${productApi}/${id}`,
         method: "GET",
         loadingOn, loadingOff
@@ -54,9 +54,9 @@ export const createProduct = async ({
     onError
 }: {
     data: Record<string, any>,
+    loadingOn: () => void,
+    loadingOff: () => void,
     image?: File | null,
-    loadingOn?: () => void,
-    loadingOff?: () => void,
     onSuccess?: () => void,
     onError?: () => void
 }): Promise<boolean> => {
@@ -83,16 +83,16 @@ export const createProduct = async ({
 }
 
 export const updateProduct = async ({
-    data,
     id,
+    data,
     image,
     loadingOn,
     loadingOff,
     onSuccess,
     onError
 }: {
-    data: Record<string, any>;
     id: number;
+    data: Record<string, any>;
     image?: File | null;
     loadingOn?: () => void;
     loadingOff?: () => void;
@@ -105,7 +105,7 @@ export const updateProduct = async ({
     });
     if (image) form.append("image", image);
 
-    const req = await fetchLink<Product>({
+    const req = await fetchLink<ProductAttributes>({
         address: `${productApi}/${id}`,
         method: "PUT",
         bodyData: form,

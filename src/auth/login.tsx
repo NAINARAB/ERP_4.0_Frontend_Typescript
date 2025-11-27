@@ -3,6 +3,7 @@ import { z } from "zod";
 import { useAuth } from "./authContext";
 import { useNavigate } from "react-router-dom";
 import baseURL from "../config/baseURL";
+import { fetchLink } from "../components/customFetch";
 
 const schema = z.object({
     username: z.string().min(1, "Username is required"),
@@ -28,9 +29,9 @@ const buttonStyle: React.CSSProperties = {
     cursor: "pointer"
 };
 
-const Login: React.ComponentType<{ loadingOn: () => void, loadingOff: () => void, loading: boolean }> = ({ 
-    loadingOn = () => {}, 
-    loadingOff = () => {},
+const Login: React.ComponentType<{ loadingOn: () => void, loadingOff: () => void, loading: boolean }> = ({
+    loadingOn = () => { },
+    loadingOff = () => { },
     loading = false
 }) => {
     const { login } = useAuth();
@@ -43,32 +44,28 @@ const Login: React.ComponentType<{ loadingOn: () => void, loadingOff: () => void
         setError(null);
 
         const parsed = schema.safeParse(form);
+
         if (!parsed.success) {
             setError(parsed.error.issues[0].message);
             return;
         }
 
-        loadingOn();
-        try {
-            const res = await fetch(`${baseURL}configuration/login`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(parsed.data)
-            });
-
-            if (!res.ok) {
-                const msg = (await res.json().catch(() => ({})))?.message ?? "Login failed";
-                throw new Error(msg);
+        fetchLink({
+            address: `configuration/login`,
+            method: "POST",
+            bodyData: parsed.data,
+            loadingOff,
+            loadingOn
+        }).then(data => {
+            if (data.success) {
+                login(data?.others?.token, data?.others?.user);
+                nav("/", { replace: true });
+            } else {
+                setError(data.message);
             }
-
-            const data = await res.json();
-            login(data.token, data.user);
-            nav("/", { replace: true });
-        } catch (err: any) {
-            setError(err.message || "Something went wrong");
-        } finally {
-            loadingOff();
-        }
+        }).catch(e => {
+            setError(e.message || "Something went wrong");
+        })
     }
 
     return (
