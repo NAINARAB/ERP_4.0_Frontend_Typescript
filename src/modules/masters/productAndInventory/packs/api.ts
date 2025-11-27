@@ -1,12 +1,8 @@
 import { fetchLink } from "../../../../components/customFetch";
 import { toast } from 'react-toastify';
+import type { Pack } from "./variable";
 
 const packAPI = "masters/packs/";
-
-export type Pack = {
-    Pack_Id: number;
-    Pack: string;
-}
 
 export const getPacks = async ({
     loadingOn,
