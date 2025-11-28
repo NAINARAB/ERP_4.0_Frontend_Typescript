@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { IconButton, Button } from "@mui/material";
 import { Edit } from "@mui/icons-material";
 import type { PageProps } from "../../../../routes/indexRouter";
-import type { Pack } from "./api";
+import type { Pack } from "./variable";
 import { getPacks } from "./api";
 import DataTable, { createCol } from "../../../../components/dataTable";
 import PackCreationForm from "./createForm";
